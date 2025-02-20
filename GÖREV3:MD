@@ -1,0 +1,3 @@
+#ASLINDA BURDA DAHA 1-100 ARASINDAKİ SAYILAR OLACAĞI İÇİN DAHA KISA BİR ŞEKİLDE YAPTIM :D
+for i in range(1,50):
+    print(2*i)
