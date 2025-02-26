@@ -1,0 +1,40 @@
+ogrenciler = []
+ÇOĞUNLUKLA FONKİSYON ODAKLI YAPIP İŞ KOLAYLIĞI İÇİN UĞRAŞTIM
+
+## İLK BAŞTA ÖĞRENCİ BİLGİLERİNİ ALDIM 
+def input_ogrenci_bilgileri():
+    return {
+        "Ad": input("Ad: "),
+        "Soyad": input("Soyad: "),
+        "Yaş": int(input("Yaş: ")),
+        "Dersler": [ders.strip() for ders in input("Dersler (virgülle ayırın): ").split(",")]
+    }
+## ÖĞRENCİ YOKSA ÖĞRECİ EKLENMEDİ HATASINI FONKSİYONLA YAZDIM VAR İSEDE ÖĞRENCİ BİLGİLERİNİ LİSTE ŞEKLİNDE ALMAK AMACIM HERBİR İŞLEMİ FONKSİYONLAYIP İŞLEME ALMAK 
+def listele_ogrenciler():
+    if not ogrenciler:
+        print("Henüz öğrenci eklenmedi.")
+        return
+    i = 1
+    for ogr in ogrenciler:
+        print(f"{i}. {ogr['Ad']} {ogr['Soyad']} - Yaş: {ogr['Yaş']} - Dersler: {', '.join(ogr['Dersler'])}")
+        i += 1
+## BURADA DA İŞLEM YAPILCAĞI NUMARA FONKSİYONUNU KULLANDIM
+def secim_yap(islem):
+    listele_ogrenciler()
+    return int(input(f"{islem} için öğrenci numarası: ")) - 1
+BURADA DA LAMBDA YI KULLANARAK TEKTE FONKSİYONA ALDIM
+def menu():
+    islemler = {
+        "1": lambda: ogrenciler.append(input_ogrenci_bilgileri()),
+        "2": listele_ogrenciler,
+        "3": lambda: ogrenciler.pop(secim_yap("Silme")) if ogrenciler else print("Liste boş!"),
+        "4": lambda: ogrenciler.__setitem__(secim := secim_yap("Güncelleme"), input_ogrenci_bilgileri()) if 0 <= secim < len(ogrenciler) else print("Geçersiz seçim!"),
+        "5": lambda: print(ogrenciler[secim_yap("Bilgi görüntüleme")]) if ogrenciler else print("Liste boş!"),
+        "6": exit
+    }
+## BURASI ÇIKTI BÖLÜMÜ
+    while True:
+        secim = input("\n1-Ekle 2-Listele 3-Sil 4-Güncelle 5-Bilgi 6-Çıkış\nSeçim: ")
+        islemler.get(secim, lambda: print("Geçersiz seçim!"))()
+
+menu()
