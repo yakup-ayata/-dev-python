@@ -1,0 +1,156 @@
+1.soru
+# "ogrenciler.txt" dosyası oluşturdum
+# def fonksiyonu ile öğrenci ekleme işlemi yaptım
+#ve bitti diyince de sistemi kapatan bir işlem ayzdım
+
+def ogrenci_ekle():
+    with open("ogrenciler.txt", "a", encoding="utf-8") as dosya:
+        while True:
+            isim = input("Öğrenci ismi girin (Çıkmak için 'bitti' yazın): ")
+            if isim.strip().lower() == "bitti":
+                print("Öğrenci giriş işlemi sonlandırıldı.")
+                break
+            dosya.write(isim + "\n")
+#burdada listeleme fonksiyonunu yazdım
+def ogrenci_listele():
+    try:
+        with open("ogrenciler.txt", "r", encoding="utf-8") as dosya:
+            print("\nKayıtlı Öğrenciler:")
+            print(dosya.read())
+    except FileNotFoundError:
+        print("Dosya bulunamadı. Önce öğrenci ekleyin.")
+
+
+
+ogrenci_listele()
+ogrenci_ekle()
+
+2.soru 
+  #ilk günlük yazmak için with opene kullandım  çıkmak içinde bitti komutunu ekledim
+  import os
+
+def gunluk_yaz():
+    with open("gunluk.txt", "a", encoding="utf-8") as dosya:
+        while True:
+            not_icerik = input("Günlük notunuzu girin (Çıkmak için 'bitti' yazın): ")
+            if not_icerik.strip().lower() == "bitti":
+                print("Günlük giriş işlemi sonlandırıldı.")
+                break
+            dosya.write(not_icerik + "\n")
+#burda gorüntüleme işlemi içn yine aynı fonksiyon işlemini yaptım
+def gunluk_goruntule():
+    try:
+        with open("gunluk.txt", "r", encoding="utf-8") as dosya:
+            print("\nGünlük Kayıtları:")
+            print(dosya.read())
+    except FileNotFoundError:
+        print("Günlük dosyası bulunamadı.")
+#3 burda da hata verir ise die filenotfounderror komutu ile işleme aldım
+def gunluk_sil():
+    try:
+        os.remove("gunluk.txt")
+        print("Günlük dosyası silindi.")
+    except FileNotFoundError:
+        print("Silinecek günlük dosyası bulunamadı.")
+# burda da komut satırlarını yazıp işlemi bitirdim
+while True:
+    komut = input("Komut girin (yaz, goruntule, sil, cik): ").strip().lower()
+    if komut == "yaz":
+        gunluk_yaz()
+    elif komut == "goruntule":
+        gunluk_goruntule()
+    elif komut == "sil":
+        gunluk_sil()
+    elif komut == "cik":
+        print("Programdan çıkılıyor.")
+        break
+    else:
+        print("Geçersiz komut. Lütfen tekrar deneyin.")
+  3.soru
+  import json
+#kullanıcıdan bilgileri aldım
+dosya_adi = "kullanicilar.json"
+
+def kullanici_ekle():
+    ad = input("Adınızı girin: ")
+    soyad = input("Soyadınızı girin: ")
+    yas = input("Yaşınızı girin: ")
+    #exception da olabilecek hatalarda sistemin çıkmaması için yazdım
+    try:
+        with open(dosya_adi, "r", encoding="utf-8") as dosya:
+            kullanicilar = json.load(dosya)
+    except Exception:
+        kullanicilar = []
+    
+    kullanicilar.append({"ad": ad, "soyad": soyad, "yas": yas})
+    
+    with open(dosya_adi, "w", encoding="utf-8") as dosya:
+        json.dump(kullanicilar, dosya, ensure_ascii=False, indent=4)
+    print("Kullanıcı kaydedildi.")
+#listeleme işlemini yazmak için kullandığım benzer bi fonksiyon yazdım
+def kullanici_listele():
+    try:
+        with open(dosya_adi, "r", encoding="utf-8") as dosya:
+            kullanicilar = json.load(dosya)
+            for k in kullanicilar:
+                print(f"{k['ad']} {k['soyad']}, Yaş: {k['yas']}")
+    except Exception:
+        print("Kayıtlı kullanıcı bulunmamaktadır.")
+#burada da çıktı ekranına seçenek sunmak için yazdım 
+while True:
+    komut = input("Komut girin (ekle, listele, çık): ").strip().lower()
+    if komut == "ekle":
+        kullanici_ekle()
+    elif komut == "listele":
+        kullanici_listele()
+    elif komut == "çık":
+        break
+    else:
+        print("Geçersiz komut.")
+  4.soru
+  # ad soyad bilgisi alıp ekleme yaptım
+def ekle():
+    ad = input("Ad ve Soyad: ").strip()
+    numara = input("Telefon Numarası: ").strip()
+    with open("rehber.txt", "a") as dosya:
+        dosya.write(f"{ad} - {numara}\n")
+    print("Kişi eklendi.")
+# arama komutuna ekleyip yine fonksiyon işlemi koydum
+def ara():
+    aranan_ad = input("Aranacak kişinin adını girin: ").strip()
+    try:
+        with open("rehber.txt", "r") as dosya:
+            for satir in dosya:
+                if satir.startswith(aranan_ad):
+                    print("Bulunan Kayıt:", satir.strip())
+                    return
+        print("Kişi bulunamadı.")
+    except FileNotFoundError:
+        print("Rehber dosyası bulunamadı.")
+
+def listele():
+    try:
+        with open("rehber.txt", "r") as dosya:
+            print("Telefon Rehberi:")
+            print(dosya.read().strip())
+    except FileNotFoundError:
+        print("Rehber dosyası bulunamadı.")
+
+if __name__ == "__main__":
+    while True:
+        komut = input("Komut girin (ekle, ara, listele, cikis): ").strip().lower()
+        if komut == "ekle":
+            ekle()
+        elif komut == "ara":
+            ara()
+        elif komut == "listele":
+            listele()
+        elif komut == "cikis":
+            break
+        else:
+            print("Geçersiz komut.")
+  5.soru YAPAMADIM :(
+
+
+
+
