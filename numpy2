@@ -1,0 +1,20 @@
+import numpy as np
+
+
+np.random.seed(42)
+
+
+maaslar = np.random.randint(3000, 15001, 500)
+
+
+departmanlar = np.random.randint(1, 4, 500) 
+
+
+ortalama_muhendislik = np.mean(maaslar[departmanlar == 1])
+ortalama_muhasebe = np.mean(maaslar[departmanlar == 2])
+ortalama_pazarlama = np.mean(maaslar[departmanlar == 3])
+
+# Sonuçları ekrana yazdıralım
+print(f"Mühendislik Departmanı Ortalama Maaşı: {ortalama_muhendislik:.2f} TL")
+print(f"Muhasebe Departmanı Ortalama Maaşı: {ortalama_muhasebe:.2f} TL")
+print(f"Pazarlama Departmanı Ortalama Maaşı: {ortalama_pazarlama:.2f} TL")
