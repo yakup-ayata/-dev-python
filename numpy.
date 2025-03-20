@@ -1,0 +1,26 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+np.random.seed(42)  
+
+
+maaslar = np.random.randint(3000, 15001, 500)
+
+
+ortalama_maas = np.mean(maaslar)
+maksimum_maas = np.max(maaslar)
+minimum_maas = np.min(maaslar)
+
+print(f"Ortalama Maaş: {ortalama_maas:.2f} TL")
+print(f"Maksimum Maaş: {maksimum_maas} TL")
+print(f"Minimum Maaş: {minimum_maas} TL")
+
+
+plt.figure(figsize=(10, 5))  
+plt.hist(maaslar, bins=20, color='skyblue', edgecolor='black')  
+plt.xlabel("Maaş Aralığı (TL)")  
+plt.ylabel("Çalışan Sayısı") 
+plt.title("Şirket Maaş Dağılımı")  
+plt.grid(axis='y', linestyle='--', alpha=0.7)  
+plt.show() 
