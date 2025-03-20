@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+np.random.seed(42) 
+sıcaklıklar = np.random.randint(-10, 41, 365)
+
+
+ortalama_sıcaklık = np.mean(sıcaklıklar)
+en_sıcak_gün = np.max(sıcaklıklar)
+en_soğuk_gün = np.min(sıcaklıklar)
+
+
+print(f"Ortalama Sıcaklık: {ortalama_sıcaklık:.2f}°C")
+print(f"En Sıcak Gün: {en_sıcak_gün}°C")
+print(f"En Soğuk Gün: {en_soğuk_gün}°C")
+
+
+plt.figure(figsize=(5, 5))
+plt.plot(range(1, 366), sıcaklıklar, color='tab:red', linewidth=2)
+plt.xlabel("Gün (1 - 365)")
+plt.ylabel("Sıcaklık (°C)")
+plt.title("Bir Yıl Boyunca Günlük Sıcaklık Değişimleri")
+plt.grid(True)
+plt.show()
